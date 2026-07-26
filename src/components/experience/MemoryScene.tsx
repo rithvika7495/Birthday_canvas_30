@@ -69,7 +69,7 @@ export function MemoryScene({
   const alignLeft = index % 2 === 0;
 
   // Build per-variant image style
-  const imgStyle: Record<string, MotionValue<number | string>> = { scale };
+  const imgStyle: Record<string, MotionValue<number> | MotionValue<string>> = { scale };
   if (variant === "drift") {
     imgStyle.x = xDrift;
     imgStyle.y = yImg;
