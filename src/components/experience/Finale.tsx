@@ -28,12 +28,12 @@ export function Finale() {
         <motion.div style={{ scale: collageScale }} className="absolute inset-0">
 
           {memories.map((m, i) => {
-            const cols = 4;
+            const cols = 6;
             const rows = Math.ceil(memories.length / cols);
             const col = i % cols;
             const row = Math.floor(i / cols);
-            const jitterX = ((i * 37) % 11) - 5;
-            const jitterY = ((i * 53) % 11) - 5;
+            const jitterX = ((i * 37) % 9) - 4;
+            const jitterY = ((i * 53) % 9) - 4;
             const rotate = ((i * 41) % 21) - 10;
             const left = ((col + 0.5) / cols) * 100 + jitterX;
             const top = ((row + 0.5) / rows) * 100 + jitterY;
@@ -44,10 +44,10 @@ export function Finale() {
                 animate={{ opacity: 1, y: 0, rotate, scale: 1 }}
                 transition={{
                   duration: 1.6,
-                  delay: 0.08 * i,
+                  delay: 0.06 * i,
                   ease: [0.19, 1, 0.22, 1],
                 }}
-                className="absolute h-[28vh] w-[24vw] min-w-[200px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-sm bg-neutral-900 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.8)] ring-1 ring-white/10"
+                className="absolute h-[22vh] w-[17vw] min-w-[160px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-sm bg-neutral-900 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.8)] ring-1 ring-white/10"
                 style={{
                   left: `${left}%`,
                   top: `${top}%`,
