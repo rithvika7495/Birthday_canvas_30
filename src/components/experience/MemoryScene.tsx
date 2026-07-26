@@ -69,16 +69,10 @@ export function MemoryScene({
   const alignLeft = index % 2 === 0;
 
   // Build per-variant image style
-  const imgStyle: Record<string, MotionValue<number> | MotionValue<string>> = { scale };
-  if (variant === "drift") {
-    imgStyle.x = xDrift;
-    imgStyle.y = yImg;
-  } else if (variant === "rotate") {
-    imgStyle.rotate = rotate;
-    imgStyle.y = yImg;
-  } else {
-    imgStyle.y = yImg;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const imgStyle: any = { scale, y: yImg };
+  if (variant === "drift") imgStyle.x = xDrift;
+  if (variant === "rotate") imgStyle.rotate = rotate;
 
   return (
     <section ref={ref} className="relative h-[220vh]">
