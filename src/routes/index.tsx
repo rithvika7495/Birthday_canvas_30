@@ -85,7 +85,9 @@ function Experience() {
             <Intro />
             <OpeningLines />
 
-            {memories.slice(0, 4).map((m, i) => (
+            {/* First arc: belonging, the hackathon, the lighter nights,
+                and the night you came home. */}
+            {memories.slice(0, 12).map((m, i) => (
               <MemoryScene
                 key={i}
                 memory={m}
@@ -94,13 +96,15 @@ function Experience() {
               />
             ))}
 
+            {/* A quiet interlude — the function I keep running in my head. */}
             <CodeEditor />
 
-            {memories.slice(4).map((m, i) => (
+            {/* Second arc: patience, airports, and the quiet close. */}
+            {memories.slice(12).map((m, i) => (
               <MemoryScene
-                key={i + 4}
+                key={i + 12}
                 memory={m}
-                index={i + 4}
+                index={i + 12}
                 onEnter={(idx) => setCurrent(idx + 1)}
               />
             ))}
