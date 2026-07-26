@@ -42,7 +42,7 @@ export const memories: Memory[] = [
 
   // ── The hackathon: a sequence of its own ────────────────────────
   {
-    image: photoHackNight,
+    image: photoHackNight.url,
     tag: "somewhere around 2 a.m.",
     caption: "The night the room was falling apart, and you were the reason it didn't.",
     sub: "Everyone was tired. You were still smiling for the rest of us.",
@@ -55,13 +55,13 @@ export const memories: Memory[] = [
     motion: "still",
   },
   {
-    image: photoOffice,
+    image: photoOffice.url,
     caption: "You explained the same thing three times, and never once made me feel small.",
     sub: "That is the kind of teacher people write about, years later.",
     motion: "drift",
   },
   {
-    image: photoHackNight,
+    image: photoHackNight.url,
     caption: "When the pressure was suffocating, you were the one making everyone laugh.",
     sub: "You carried the weight so quietly that we forgot it was even there.",
     motion: "rotate",
@@ -76,14 +76,14 @@ export const memories: Memory[] = [
 
   // ── The lighter moments ─────────────────────────────────────────
   {
-    image: photoUno,
+    image: photoUno.url,
     tag: "UNO nights, forever undefeated in memory",
     caption: "Draw four. Skip. Reverse. You laughing while the rest of us screamed.",
     sub: "Nobody won those games. We were too busy being happy.",
     motion: "rotate",
   },
   {
-    image: photoMischief,
+    image: photoMischief.url,
     caption: "This face. This exact face. I will remember this face forever.",
     sub: "Half tired, half plotting, entirely you.",
     motion: "drift",
@@ -126,13 +126,13 @@ export const memories: Memory[] = [
 
   // ── Airports, goodbyes, hellos ──────────────────────────────────
   {
-    image: photoAirportTrio,
+    image: photoAirportTrio.url,
     caption: "Even the goodbyes felt like beginnings when you were in the frame.",
     sub: "Somehow you made 1 a.m. at an airport feel like the best part of the trip.",
     motion: "rotate",
   },
   {
-    image: photoAirportPeace,
+    image: photoAirportPeace.url,
     caption: "Peace signs. Tired eyes. Full hearts.",
     sub: "This is what happiness looks like at the end of a long night.",
     motion: "zoom",
