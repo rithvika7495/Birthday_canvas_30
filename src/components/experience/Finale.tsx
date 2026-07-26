@@ -57,18 +57,19 @@ export function Finale() {
                   src={m.image}
                   alt=""
                   loading="lazy"
-                  className="h-full w-full object-cover opacity-85"
+                  className="h-full w-full object-cover"
                 />
               </motion.div>
             );
           })}
           <div
-            className="absolute inset-0"
+            className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.9) 75%)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.75) 100%)",
             }}
           />
+
         </motion.div>
 
 
