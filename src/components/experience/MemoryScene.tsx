@@ -1,0 +1,134 @@
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useEffect, useRef } from "react";
+
+import type { Memory } from "@/lib/memories";
+
+export function MemoryScene({
+  memory,
+  index,
+  onEnter,
+}: {
+  memory: Memory;
+  index: number;
+  onEnter?: (i: number) => void;
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  // Image zoom + parallax
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1.0, 1.25]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const imgOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.75, 1],
+    [0, 1, 1, 0],
+  );
+
+  // Text
+  const textY = useTransform(scrollYProgress, [0.15, 0.5], [80, 0]);
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0.2, 0.42, 0.7, 0.88],
+    [0, 1, 1, 0],
+  );
+
+  // Vignette pulse
+  const vignette = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.85, 0.55, 0.85],
+  );
+
+  // Notify parent
+  useProgressCallback(scrollYProgress, onEnter, index);
+
+  const alignLeft = index % 2 === 0;
+
+  return (
+    <section ref={ref} className="relative h-[220vh]">
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <motion.div
+          style={{ scale, y, opacity: imgOpacity }}
+          className="absolute inset-0"
+        >
+          <img
+            src={memory.image}
+            alt=""
+            loading="lazy"
+            width={1600}
+            height={1067}
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
+
+        {/* Cinematic vignette + grain-ish overlay */}
+        <motion.div
+          style={{
+            opacity: vignette,
+            background:
+              "radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%)",
+          }}
+          className="absolute inset-0 mix-blend-multiply"
+        />
+        <div
+          className="absolute inset-0 opacity-[0.08] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>\")",
+          }}
+        />
+
+        {/* Caption */}
+        <motion.div
+          style={{ y: textY, opacity: textOpacity }}
+          className={`absolute bottom-[14vh] w-full px-8 md:bottom-[16vh] md:px-16 ${
+            alignLeft ? "text-left" : "text-right"
+          }`}
+        >
+          <div
+            className={`mx-auto max-w-3xl ${
+              alignLeft ? "md:ml-0 md:mr-auto" : "md:mr-0 md:ml-auto"
+            }`}
+          >
+            <p className="mb-4 text-[10px] uppercase tracking-[0.45em] text-amber-100/70">
+              Chapter {String(index + 1).padStart(2, "0")}
+            </p>
+            <h2 className="font-serif text-3xl leading-[1.2] text-amber-50 md:text-5xl lg:text-6xl">
+              {memory.caption}
+            </h2>
+            {memory.sub && (
+              <p className="mt-6 font-serif text-base italic text-amber-100/60 md:text-lg">
+                {memory.sub}
+              </p>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function useProgressCallback(
+  progress: MotionValue<number>,
+  onEnter: ((i: number) => void) | undefined,
+  index: number,
+) {
+  const fired = useRef(false);
+  useEffect(() => {
+    const unsub = progress.on("change", (v) => {
+      if (v > 0.35 && v < 0.65) {
+        if (!fired.current) {
+          fired.current = true;
+          onEnter?.(index);
+        }
+      } else if (v < 0.2 || v > 0.85) {
+        fired.current = false;
+      }
+    });
+    return unsub;
+  }, [progress, onEnter, index]);
+}
+
